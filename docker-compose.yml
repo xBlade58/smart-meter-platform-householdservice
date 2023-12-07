@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  postgresdb:
+    image: postgres:14.1-alpine
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: postgresdb
+      POSTGRES_USER: adnim
+      POSTGRES_PASSWORD: adnim
+    volumes:
+      - ./src/main/resources/schemas.sql:/docker-entrypoint-initdb.d/schemas.sql
+    networks:
+      my-bridge-network:
+        aliases:
+          - postgresdb
+    restart: always
+
+networks:
+  my-bridge-network:
+    driver: bridge
+    external: true
+
+volumes:
+  pg_admin_data:
