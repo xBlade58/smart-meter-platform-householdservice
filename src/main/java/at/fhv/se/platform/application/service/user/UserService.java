@@ -1,6 +1,8 @@
 package at.fhv.se.platform.application.service.user;
 
+import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
+import at.fhv.se.platform.domain.model.User;
 import at.fhv.se.platform.domain.port.inbound.user.CreateUserUseCase;
 import at.fhv.se.platform.domain.port.inbound.user.GetAllUsersUseCase;
 import at.fhv.se.platform.domain.port.inbound.user.GetUserUseCase;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Justin Ströhle
@@ -23,16 +26,24 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
 
     @Override
     public String createUser(UserDTO userDTO) {
-        return null;
+        this.userRepository.save(new User(userDTO.getId(), userDTO.getFirstname(), userDTO.getLastname()));
+        return userDTO.getId(); //TODO ID
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return null;
+        return this.userRepository.getAllUsers().stream()
+                .map(user -> new UserDTO(
+                        user.getId(),
+                        user.getFirstName(),
+                        user.getLastName()
+                ))
+                .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO getUser(String id) {
-        return null;
+        User user = this.userRepository.getUser(id);
+        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName());
     }
 }
