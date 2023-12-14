@@ -1,4 +1,4 @@
-package at.fhv.se.platform.model;
+package at.fhv.se.platform.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,15 +8,13 @@ import jakarta.persistence.Id;
  * 16.11.2023
  */
 
-//@Entity
 public class User {
 
-//    @Id
     private String id;
     private String firstName;
     private String lastName;
 
-    public User() {
+    private User() {
     }
 
     public User(String id, String firstName, String lastName) {

@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS HOUSEHOLD (
+    id SERIAL not null primary key,
     street char(128) not null,
     street_no char(8) not null,
-    door_no char(4) not null,
+    door_no char(4),
     city char(64) not null,
     zip_code char(10) not null,
     country char(64) not null,
     household_type char(16),
-    residents_no int,
-    PRIMARY KEY (street, street_no, door_no, city, zip_code, country)
+    residents_no int
 );
 
 CREATE TABLE IF NOT EXISTS METER_USER (
