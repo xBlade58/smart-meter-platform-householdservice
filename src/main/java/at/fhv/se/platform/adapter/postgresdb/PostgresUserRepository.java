@@ -40,7 +40,7 @@ public class PostgresUserRepository implements UserRepository {
     }
 
     private static UserDBEntity mapModelToDBEntity(User model){
-        return new UserDBEntity(model.getId(), model.getFirstName(), model.getLastName());
+        return new UserDBEntity(model.getFirstName(), model.getLastName());
     }
 
     private static User mapDBEntityToModel(UserDBEntity dbEntity){

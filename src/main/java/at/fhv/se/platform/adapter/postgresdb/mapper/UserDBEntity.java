@@ -1,8 +1,8 @@
 package at.fhv.se.platform.adapter.postgresdb.mapper;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 /**
  * @author Justin Ströhle
@@ -13,20 +13,20 @@ import jakarta.persistence.Table;
 @Table(name = "meter_user")
 public class UserDBEntity {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String firstName;
     private String lastName;
 
     public UserDBEntity() {
     }
 
-    public UserDBEntity(String id, String firstName, String lastName) {
-        this.id = id;
+    public UserDBEntity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -38,7 +38,7 @@ public class UserDBEntity {
         return lastName;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

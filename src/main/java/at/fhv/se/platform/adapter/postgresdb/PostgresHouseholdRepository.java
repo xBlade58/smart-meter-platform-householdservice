@@ -41,7 +41,7 @@ public class PostgresHouseholdRepository implements HouseholdRepository {
     }
 
     private static HouseholdDBEntity mapModelToDBEntity(Household model) {
-        return new HouseholdDBEntity(model.getId(), model.getStreet(), model.getStreetNo(), model.getDoorNo(),
+        return new HouseholdDBEntity(model.getStreet(), model.getStreetNo(), model.getDoorNo(),
                 model.getCity(), model.getZip(), model.getCountry(), model.getType().toString(), model.getSize(),
                 model.getResidentsNo());
     }

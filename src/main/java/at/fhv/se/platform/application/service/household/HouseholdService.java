@@ -26,7 +26,7 @@ public class HouseholdService implements CreateHouseholdUseCase, GetAllHousehold
 
     @Override
     public String createHousehold(HouseholdDTO householdDTO) {
-        this.householdRepository.save(new Household(householdDTO.getId(), householdDTO.getStreet(),
+        this.householdRepository.save(new Household(householdDTO.getStreet(),
                 householdDTO.getStreetNo(), householdDTO.getDoorNo(), householdDTO.getCity(), householdDTO.getZip(),
                 householdDTO.getCountry(), HouseholdType.valueOf(householdDTO.getType()), householdDTO.getSize(),
                 householdDTO.getResidentsNo()));
@@ -37,7 +37,7 @@ public class HouseholdService implements CreateHouseholdUseCase, GetAllHousehold
     public List<HouseholdDTO> getAllHouseholds() {
         return this.householdRepository.getAllHouseholds().stream()
                 .map(household -> new HouseholdDTO(
-                        household.getId(),
+                        household.getId().toString(),
                         household.getStreet(),
                         household.getStreetNo(),
                         household.getDoorNo(),
@@ -54,7 +54,7 @@ public class HouseholdService implements CreateHouseholdUseCase, GetAllHousehold
     @Override
     public HouseholdDTO getHousehold(String id) {
         Household household = this.householdRepository.getHousehold(id);
-        return new HouseholdDTO(household.getId(), household.getStreet(), household.getStreetNo(),
+        return new HouseholdDTO(household.getId().toString(), household.getStreet(), household.getStreetNo(),
                 household.getDoorNo(), household.getCity(), household.getZip(), household.getCountry(),
                 household.getType().toString(), household.getSize(), household.getResidentsNo());
     }

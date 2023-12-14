@@ -3,6 +3,8 @@ package at.fhv.se.platform.domain.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.util.UUID;
+
 /**
  * @author Justin Ströhle
  * 16.11.2023
@@ -10,20 +12,25 @@ import jakarta.persistence.Id;
 
 public class User {
 
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
 
     private User() {
     }
 
-    public User(String id, String firstName, String lastName) {
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User(UUID id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 

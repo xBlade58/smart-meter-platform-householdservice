@@ -26,7 +26,7 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
 
     @Override
     public String createUser(UserDTO userDTO) {
-        this.userRepository.save(new User(userDTO.getId(), userDTO.getFirstname(), userDTO.getLastname()));
+        this.userRepository.save(new User(userDTO.getFirstname(), userDTO.getLastname()));
         return userDTO.getId(); //TODO ID
     }
 
@@ -34,7 +34,7 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
     public List<UserDTO> getAllUsers() {
         return this.userRepository.getAllUsers().stream()
                 .map(user -> new UserDTO(
-                        user.getId(),
+                        user.getId().toString(),
                         user.getFirstName(),
                         user.getLastName()
                 ))
@@ -44,6 +44,6 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
     @Override
     public UserDTO getUser(String id) {
         User user = this.userRepository.getUser(id);
-        return new UserDTO(user.getId(), user.getFirstName(), user.getLastName());
+        return new UserDTO(user.getId().toString(), user.getFirstName(), user.getLastName());
     }
 }
