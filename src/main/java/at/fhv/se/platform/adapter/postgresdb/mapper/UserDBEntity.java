@@ -2,6 +2,7 @@ package at.fhv.se.platform.adapter.postgresdb.mapper;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -17,6 +18,9 @@ public class UserDBEntity {
     private UUID id;
     private String firstName;
     private String lastName;
+
+    @OneToMany(mappedBy = "user")
+    private Set<HouseholdUserMappingDBEntity> householdDBEntitySet;
 
     public UserDBEntity() {
     }
@@ -48,5 +52,13 @@ public class UserDBEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<HouseholdUserMappingDBEntity> getHouseholdDBEntitySet() {
+        return householdDBEntitySet;
+    }
+
+    public void setHouseholdDBEntitySet(Set<HouseholdUserMappingDBEntity> householdDBEntitySet) {
+        this.householdDBEntitySet = householdDBEntitySet;
     }
 }

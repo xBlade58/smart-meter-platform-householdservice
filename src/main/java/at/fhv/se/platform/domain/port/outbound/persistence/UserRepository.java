@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface UserRepository {
-    void save(User user);
+    String save(User user);
     List<User> getAllUsers();
     User getUser(String id);
 }

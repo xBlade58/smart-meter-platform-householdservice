@@ -1,5 +1,6 @@
 package at.fhv.se.platform.domain.model;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,6 +19,7 @@ public class Household {
     private HouseholdType type;
     private double size;
     private int residentsNo;
+    private List<User> userList;
 
     public Household() {
     }
@@ -47,6 +49,21 @@ public class Household {
         this.type = type;
         this.size = size;
         this.residentsNo = residentsNo;
+    }
+
+    public Household(UUID id, String street, String streetNo, String doorNo, String city, String zip, String country,
+                     HouseholdType type, double size, int residentsNo, List<User> userList) {
+        this.id = id;
+        this.street = street;
+        this.streetNo = streetNo;
+        this.doorNo = doorNo;
+        this.city = city;
+        this.zip = zip;
+        this.country = country;
+        this.type = type;
+        this.size = size;
+        this.residentsNo = residentsNo;
+        this.userList = userList;
     }
 
     public UUID getId() {
@@ -89,4 +106,7 @@ public class Household {
         return residentsNo;
     }
 
+    public List<User> getUserList() {
+        return userList;
+    }
 }

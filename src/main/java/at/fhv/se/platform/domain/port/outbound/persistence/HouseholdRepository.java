@@ -1,6 +1,7 @@
 package at.fhv.se.platform.domain.port.outbound.persistence;
 
 import at.fhv.se.platform.domain.model.Household;
+import at.fhv.se.platform.domain.model.User;
 
 import java.util.List;
 
@@ -10,9 +11,11 @@ import java.util.List;
  */
 
 public interface HouseholdRepository {
-    void save(Household household);
+    String save(Household household);
 
     List<Household> getAllHouseholds();
 
     Household getHousehold(String id);
+
+    void assignUser(User user, Household household);
 }

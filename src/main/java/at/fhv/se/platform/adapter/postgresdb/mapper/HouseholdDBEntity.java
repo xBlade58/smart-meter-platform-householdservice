@@ -2,6 +2,7 @@ package at.fhv.se.platform.adapter.postgresdb.mapper;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -24,6 +25,10 @@ public class HouseholdDBEntity {
     private String type;
     private double size;
     private int residentsNo;
+
+    @OneToMany(mappedBy = "household")
+    private Set<HouseholdUserMappingDBEntity> users;
+
 
     public HouseholdDBEntity() {
     }
@@ -119,5 +124,13 @@ public class HouseholdDBEntity {
 
     public void setResidentsNo(int residentsNo) {
         this.residentsNo = residentsNo;
+    }
+
+    public Set<HouseholdUserMappingDBEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<HouseholdUserMappingDBEntity> users) {
+        this.users = users;
     }
 }

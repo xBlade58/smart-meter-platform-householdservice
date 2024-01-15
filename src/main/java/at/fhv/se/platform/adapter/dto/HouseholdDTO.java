@@ -1,5 +1,8 @@
 package at.fhv.se.platform.adapter.dto;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Justin Ströhle
  * 07.12.2023
@@ -16,6 +19,7 @@ public class HouseholdDTO {
     private String type;
     private double size;
     private int residentsNo;
+    private List<UserDTO> users;
 
     public HouseholdDTO(String id, String street, String streetNo, String doorNo, String city, String zip,
                         String country, String type, double size, int residentsNo) {
@@ -29,6 +33,22 @@ public class HouseholdDTO {
         this.type = type;
         this.size = size;
         this.residentsNo = residentsNo;
+        this.users = new LinkedList<>();
+    }
+
+    public HouseholdDTO(String id, String street, String streetNo, String doorNo, String city, String zip,
+                        String country, String type, double size, int residentsNo, List<UserDTO> users) {
+        this.id = id;
+        this.street = street;
+        this.streetNo = streetNo;
+        this.doorNo = doorNo;
+        this.city = city;
+        this.zip = zip;
+        this.country = country;
+        this.type = type;
+        this.size = size;
+        this.residentsNo = residentsNo;
+        this.users = users;
     }
 
     public String getId() {
