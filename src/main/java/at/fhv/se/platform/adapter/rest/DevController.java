@@ -1,10 +1,13 @@
 package at.fhv.se.platform.adapter.rest;
 
+import at.fhv.se.platform.adapter.dto.AssignMeterDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
 import at.fhv.se.platform.application.service.household.HouseholdService;
 import at.fhv.se.platform.application.service.user.UserService;
+import at.fhv.se.platform.domain.port.inbound.household.AssignMeterToHouseholdUseCase;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,9 @@ public class DevController {
 
     @Autowired
     private HouseholdService householdService;
+
+    @Autowired
+    private AssignMeterToHouseholdUseCase assignMeterToHouseholdUseCase;
 
     @GetMapping(value = "/getUsers")
     public ResponseEntity getAllUsers(){
@@ -55,6 +61,12 @@ public class DevController {
     public ResponseEntity createHouseholdUserMapping(@RequestBody HouseholdUserMappingDTO householdUserMappingDTO) {
         this.householdService.assignUserToHousehold(householdUserMappingDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(value = "/{householdId}/assignMeter", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity assignMeterTOHousehold(@PathVariable String householdId, @RequestBody AssignMeterDTO assignMeterDTO) {
+        assignMeterToHouseholdUseCase.assign(householdId, assignMeterDTO.getMeterId());
+        return ResponseEntity.ok().body("test");
     }
 
 }

@@ -17,5 +17,7 @@ public interface HouseholdRepository {
 
     Household getHousehold(String id);
 
+    boolean existsById(String id);
+
     void assignUser(User user, Household household);
 }

@@ -77,4 +77,9 @@ public class PostgresHouseholdRepository implements HouseholdRepository {
     private static User mapDBEntityToModel(UserDBEntity userDBEntity) {
         return new User(userDBEntity.getId(), userDBEntity.getFirstName(), userDBEntity.getLastName());
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return postgresJPAHousehold.existsById(UUID.fromString(id));
+    }
 }
