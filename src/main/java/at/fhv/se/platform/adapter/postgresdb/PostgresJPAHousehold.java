@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
 import java.util.UUID;
 
 /**
@@ -18,4 +21,5 @@ import java.util.UUID;
 public interface PostgresJPAHousehold extends JpaRepository<HouseholdDBEntity, UUID> {
     @Query("SELECT h FROM HouseholdDBEntity h INNER JOIN FETCH h.users u WHERE u.id.userId = :userId")
     List<HouseholdDBEntity> findByUserID(@Param("userId") UUID userId);
+
 }

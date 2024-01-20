@@ -1,7 +1,6 @@
 package at.fhv.se.platform.domain.port.inbound.user;
 
 import at.fhv.se.platform.adapter.dto.CreateUserDTO;
-import at.fhv.se.platform.adapter.dto.UserDTO;
 
 /**
  * @author Justin Ströhle

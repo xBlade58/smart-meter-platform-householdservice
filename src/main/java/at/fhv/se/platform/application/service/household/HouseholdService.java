@@ -1,5 +1,6 @@
 package at.fhv.se.platform.application.service.household;
 
+
 import at.fhv.se.platform.adapter.dto.CreateHouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
@@ -8,13 +9,20 @@ import at.fhv.se.platform.application.service.user.UserService;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
 import at.fhv.se.platform.domain.model.User;
+
 import at.fhv.se.platform.domain.port.inbound.household.*;
+
+import at.fhv.se.platform.domain.port.inbound.household.AssignUserToHouseholdUseCase;
+import at.fhv.se.platform.domain.port.inbound.household.CreateHouseholdUseCase;
+import at.fhv.se.platform.domain.port.inbound.household.GetAllHouseholdsUseCase;
+import at.fhv.se.platform.domain.port.inbound.household.GetHouseholdUseCase;
 import at.fhv.se.platform.domain.port.outbound.persistence.HouseholdRepository;
 import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -42,6 +50,7 @@ public class HouseholdService implements CreateHouseholdUseCase,
                 householdDTO.getStreetNo(), householdDTO.getDoorNo(), householdDTO.getCity(), householdDTO.getZip(),
                 householdDTO.getCountry(), HouseholdType.valueOf(householdDTO.getType()), householdDTO.getSize(),
                 householdDTO.getResidentsNo()));
+
     }
 
     @Override
