@@ -1,5 +1,6 @@
 package at.fhv.se.platform.application.service.user;
 
+import at.fhv.se.platform.adapter.dto.CreateUserDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
 import at.fhv.se.platform.domain.model.Household;
@@ -26,7 +27,7 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
     private UserRepository userRepository;
 
     @Override
-    public String createUser(UserDTO userDTO) {
+    public String createUser(CreateUserDTO userDTO) {
         return this.userRepository.save(new User(userDTO.getFirstname(), userDTO.getLastname()));
     }
 

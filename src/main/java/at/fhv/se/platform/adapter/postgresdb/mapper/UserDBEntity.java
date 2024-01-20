@@ -30,6 +30,13 @@ public class UserDBEntity {
         this.lastName = lastName;
     }
 
+
+    public UserDBEntity(UUID id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public UUID getId() {
         return id;
     }

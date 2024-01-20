@@ -46,6 +46,20 @@ public class HouseholdDBEntity {
         this.residentsNo = residentsNo;
     }
 
+    public HouseholdDBEntity(UUID id, String street, String streetNo, String doorNo, String city, String zip,
+                             String country, String type, double size, int residentsNo) {
+        this.id = id;
+        this.street = street;
+        this.streetNo = streetNo;
+        this.doorNo = doorNo;
+        this.city = city;
+        this.zip = zip;
+        this.country = country;
+        this.type = type;
+        this.size = size;
+        this.residentsNo = residentsNo;
+    }
+
     public UUID getId() {
         return id;
     }

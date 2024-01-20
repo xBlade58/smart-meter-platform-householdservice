@@ -1,6 +1,6 @@
 package at.fhv.se.platform.domain.port.inbound.household;
 
-import at.fhv.se.platform.adapter.dto.HouseholdDTO;
+import at.fhv.se.platform.adapter.dto.CreateHouseholdDTO;
 
 /**
  * @author Justin Ströhle
@@ -8,5 +8,5 @@ import at.fhv.se.platform.adapter.dto.HouseholdDTO;
  */
 
 public interface CreateHouseholdUseCase {
-    String createHousehold(HouseholdDTO householdDTO);
+    String createHousehold(CreateHouseholdDTO householdDTO);
 }
