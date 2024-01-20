@@ -18,4 +18,6 @@ public interface HouseholdRepository {
     Household getHousehold(String id);
 
     void assignUser(User user, Household household);
+
+    List<Household> getHouseholdsFromUser(User user);
 }

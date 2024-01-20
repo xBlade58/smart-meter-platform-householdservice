@@ -1,5 +1,6 @@
 package at.fhv.se.platform.application.service.household;
 
+import at.fhv.se.platform.adapter.dto.CreateHouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
@@ -7,16 +8,14 @@ import at.fhv.se.platform.application.service.user.UserService;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
 import at.fhv.se.platform.domain.model.User;
-import at.fhv.se.platform.domain.port.inbound.household.AssignUserToHouseholdUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.CreateHouseholdUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.GetAllHouseholdsUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.GetHouseholdUseCase;
+import at.fhv.se.platform.domain.port.inbound.household.*;
 import at.fhv.se.platform.domain.port.outbound.persistence.HouseholdRepository;
 import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +27,8 @@ import java.util.stream.Collectors;
 public class HouseholdService implements CreateHouseholdUseCase,
         GetAllHouseholdsUseCase,
         GetHouseholdUseCase,
-        AssignUserToHouseholdUseCase {
+        AssignUserToHouseholdUseCase,
+        GetHouseholdFromUserUseCase {
 
     @Autowired
     private HouseholdRepository householdRepository;
@@ -37,12 +37,11 @@ public class HouseholdService implements CreateHouseholdUseCase,
     private UserRepository userRepository;
 
     @Override
-    public String createHousehold(HouseholdDTO householdDTO) {
-        this.householdRepository.save(new Household(householdDTO.getStreet(),
+    public String createHousehold(CreateHouseholdDTO householdDTO) {
+        return this.householdRepository.save(new Household(householdDTO.getStreet(),
                 householdDTO.getStreetNo(), householdDTO.getDoorNo(), householdDTO.getCity(), householdDTO.getZip(),
                 householdDTO.getCountry(), HouseholdType.valueOf(householdDTO.getType()), householdDTO.getSize(),
                 householdDTO.getResidentsNo()));
-        return householdDTO.getId(); //TODO Id
     }
 
     @Override
@@ -86,6 +85,29 @@ public class HouseholdService implements CreateHouseholdUseCase,
         return null;
     }
 
+    @Override
+    public List<HouseholdDTO> getHouseholdFromUser(UUID userId) {
+        User user = this.getUserModel(userId.toString());
+        if (user != null) {
+            return this.householdRepository.getHouseholdsFromUser(user).stream()
+                    .map(household -> new HouseholdDTO(
+                            household.getId().toString(),
+                            household.getStreet(),
+                            household.getStreetNo(),
+                            household.getDoorNo(),
+                            household.getCity(),
+                            household.getZip(),
+                            household.getCountry(),
+                            household.getType().toString(),
+                            household.getSize(),
+                            household.getResidentsNo(),
+                            household.getUserList().stream().map(HouseholdService::userToDTO).collect(Collectors.toList())
+                    ))
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
     private Household getHouseholdModel(String id) {
         return this.householdRepository.getHousehold(id);
     }
@@ -94,7 +116,7 @@ public class HouseholdService implements CreateHouseholdUseCase,
         return this.userRepository.getUser(id);
     }
 
-    private static UserDTO userToDTO(User user){
+    private static UserDTO userToDTO(User user) {
         return new UserDTO(user.getId().toString(), user.getFirstName(), user.getLastName());
     }
 }

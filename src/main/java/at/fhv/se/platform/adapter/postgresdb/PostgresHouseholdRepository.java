@@ -47,11 +47,27 @@ public class PostgresHouseholdRepository implements HouseholdRepository {
 
     @Override
     public void assignUser(User user, Household household) {
-        this.postgresJPAHouseholdUser.save(new HouseholdUserMappingDBEntity(mapModelToDBEntity(user), mapModelToDBEntity(household)));
+        this.postgresJPAHouseholdUser.save(new HouseholdUserMappingDBEntity(
+                mapModelToDBEntityId(user),
+                mapModelToDBEntityId(household)
+        ));
+    }
+
+    @Override
+    public List<Household> getHouseholdsFromUser(User user) {
+        return this.postgresJPAHousehold.findByUserID(user.getId()).stream()
+                .map(PostgresHouseholdRepository::mapDBEntityToModel)
+                .collect(Collectors.toList());
     }
 
     private static HouseholdDBEntity mapModelToDBEntity(Household model) {
         return new HouseholdDBEntity(model.getStreet(), model.getStreetNo(), model.getDoorNo(),
+                model.getCity(), model.getZip(), model.getCountry(), model.getType().toString(), model.getSize(),
+                model.getResidentsNo());
+    }
+
+    private static HouseholdDBEntity mapModelToDBEntityId(Household model) {
+        return new HouseholdDBEntity(model.getId(), model.getStreet(), model.getStreetNo(), model.getDoorNo(),
                 model.getCity(), model.getZip(), model.getCountry(), model.getType().toString(), model.getSize(),
                 model.getResidentsNo());
     }
@@ -64,6 +80,10 @@ public class PostgresHouseholdRepository implements HouseholdRepository {
 
     private static UserDBEntity mapModelToDBEntity(User model) {
         return new UserDBEntity(model.getFirstName(), model.getLastName());
+    }
+
+    private static UserDBEntity mapModelToDBEntityId(User model) {
+        return new UserDBEntity(model.getId(), model.getFirstName(), model.getLastName());
     }
 
     private static List<User> extractUsersFromHouseholdUser(Set<HouseholdUserMappingDBEntity> householdUserMappingDBEntitySet) {

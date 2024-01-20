@@ -1,8 +1,6 @@
 package at.fhv.se.platform.adapter.rest;
 
-import at.fhv.se.platform.adapter.dto.HouseholdDTO;
-import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
-import at.fhv.se.platform.adapter.dto.UserDTO;
+import at.fhv.se.platform.adapter.dto.*;
 import at.fhv.se.platform.application.service.household.HouseholdService;
 import at.fhv.se.platform.application.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Justin Ströhle
@@ -28,25 +27,31 @@ public class DevController {
     private HouseholdService householdService;
 
     @GetMapping(value = "/getUsers")
-    public ResponseEntity getAllUsers(){
+    public ResponseEntity getAllUsers() {
         List<UserDTO> users = this.userService.getAllUsers();
         return ResponseEntity.ok().body(users);
     }
 
     @GetMapping(value = "/getHouseholds")
-    public ResponseEntity getAllHouseholds(){
+    public ResponseEntity getAllHouseholds() {
         List<HouseholdDTO> households = this.householdService.getAllHouseholds();
         return ResponseEntity.ok().body(households);
     }
 
+    @GetMapping(value = "/getHouseholdsFromUser/{userId}")
+    public ResponseEntity getHouseholdsFromUser(@PathVariable(value = "userId") UUID userId) {
+        List<HouseholdDTO> households = this.householdService.getHouseholdFromUser(userId);
+        return ResponseEntity.ok().body(households);
+    }
+
     @PostMapping(value = "/createUser", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity createUser(@RequestBody CreateUserDTO userDTO) {
         this.userService.createUser(userDTO);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/createHousehold", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createHousehold(@RequestBody HouseholdDTO householdDTO) {
+    public ResponseEntity createHousehold(@RequestBody CreateHouseholdDTO householdDTO) {
         this.householdService.createHousehold(householdDTO);
         return ResponseEntity.ok().build();
     }
