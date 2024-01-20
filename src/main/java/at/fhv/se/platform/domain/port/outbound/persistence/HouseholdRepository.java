@@ -20,4 +20,6 @@ public interface HouseholdRepository {
     boolean existsById(String id);
 
     void assignUser(User user, Household household);
+
+    List<Household> getHouseholdsFromUser(User user);
 }

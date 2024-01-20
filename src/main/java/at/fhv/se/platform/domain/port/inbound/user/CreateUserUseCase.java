@@ -1,6 +1,6 @@
 package at.fhv.se.platform.domain.port.inbound.user;
 
-import at.fhv.se.platform.adapter.dto.UserDTO;
+import at.fhv.se.platform.adapter.dto.CreateUserDTO;
 
 /**
  * @author Justin Ströhle
@@ -8,5 +8,5 @@ import at.fhv.se.platform.adapter.dto.UserDTO;
  */
 
 public interface CreateUserUseCase {
-    String createUser(UserDTO userDTO);
+    String createUser(CreateUserDTO userDTO);
 }
