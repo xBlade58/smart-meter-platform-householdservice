@@ -109,6 +109,7 @@ public class HouseholdService implements CreateHouseholdUseCase,
     @Override
     public void assign(String householdId, String meterId) {
         eventPublisher.publishHosueholdEvent(new MeterAssignedEvent(householdId, LocalDateTime.now(), meterId));
+        
         /*
         if (householdRepository.existsById(meterId)) {
         } else {

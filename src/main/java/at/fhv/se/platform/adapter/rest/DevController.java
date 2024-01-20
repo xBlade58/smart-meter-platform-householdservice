@@ -3,6 +3,7 @@ package at.fhv.se.platform.adapter.rest;
 import at.fhv.se.platform.adapter.dto.AssignMeterDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
+import at.fhv.se.platform.adapter.dto.UnassignMeterDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
 import at.fhv.se.platform.application.service.household.HouseholdService;
 import at.fhv.se.platform.application.service.user.UserService;
@@ -64,7 +65,7 @@ public class DevController {
     }
 
     @PatchMapping(value = "/{householdId}/assignMeter", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity assignMeterTOHousehold(@PathVariable String householdId, @RequestBody AssignMeterDTO assignMeterDTO) {
+    public ResponseEntity assignMeterToHousehold(@PathVariable String householdId, @RequestBody AssignMeterDTO assignMeterDTO) {
         assignMeterToHouseholdUseCase.assign(householdId, assignMeterDTO.getMeterId());
         return ResponseEntity.ok().body("test");
     }
