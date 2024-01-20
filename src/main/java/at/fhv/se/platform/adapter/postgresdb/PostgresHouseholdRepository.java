@@ -59,8 +59,6 @@ public class PostgresHouseholdRepository implements HouseholdRepository {
         return this.postgresJPAHousehold.findByUserID(user.getId()).stream()
                 .map(PostgresHouseholdRepository::mapDBEntityToModel)
                 .collect(Collectors.toList());
-      
-        this.postgresJPAHouseholdUser.save(new HouseholdUserMappingDBEntity(mapModelToDBEntity(user), mapModelToDBEntity(household)));
     }
 
     private static HouseholdDBEntity mapModelToDBEntity(Household model) {
