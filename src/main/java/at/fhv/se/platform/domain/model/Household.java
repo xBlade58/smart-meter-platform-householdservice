@@ -19,6 +19,7 @@ public class Household {
     private HouseholdType type;
     private double size;
     private int residentsNo;
+    private String meterId;
     private List<User> userList;
 
     public Household() {
@@ -66,6 +67,10 @@ public class Household {
         this.userList = userList;
     }
 
+    public void assingMeter(String meterId) {
+        this.meterId = meterId;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -108,5 +113,9 @@ public class Household {
 
     public List<User> getUserList() {
         return userList;
+    }
+
+    public String getMeterId() {
+        return meterId;
     }
 }

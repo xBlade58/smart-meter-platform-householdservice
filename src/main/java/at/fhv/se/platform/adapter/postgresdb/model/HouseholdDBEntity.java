@@ -1,4 +1,4 @@
-package at.fhv.se.platform.adapter.postgresdb.mapper;
+package at.fhv.se.platform.adapter.postgresdb.model;
 
 import jakarta.persistence.*;
 
@@ -25,6 +25,7 @@ public class HouseholdDBEntity {
     private String type;
     private double size;
     private int residentsNo;
+    private String meterId;
 
     @OneToMany(mappedBy = "household")
     private Set<HouseholdUserMappingDBEntity> users;
@@ -58,6 +59,21 @@ public class HouseholdDBEntity {
         this.type = type;
         this.size = size;
         this.residentsNo = residentsNo;
+    }
+
+    public HouseholdDBEntity(UUID id, String street, String streetNo, String doorNo, String city, String zip,
+        String country, String type, double size, int residentsNo, String meterId) {
+        this.id = id;
+        this.street = street;
+        this.streetNo = streetNo;
+        this.doorNo = doorNo;
+        this.city = city;
+        this.zip = zip;
+        this.country = country;
+        this.type = type;
+        this.size = size;
+        this.residentsNo = residentsNo;
+        this.meterId = meterId;
     }
 
     public UUID getId() {
@@ -147,4 +163,14 @@ public class HouseholdDBEntity {
     public void setUsers(Set<HouseholdUserMappingDBEntity> users) {
         this.users = users;
     }
+
+    public String getMeterId() {
+        return meterId;
+    }
+
+    public void setMeterId(String meterId) {
+        this.meterId = meterId;
+    }
+
+    
 }

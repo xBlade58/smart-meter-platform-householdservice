@@ -1,8 +1,8 @@
 package at.fhv.se.platform.adapter.postgresdb;
 
-import at.fhv.se.platform.adapter.postgresdb.mapper.HouseholdDBEntity;
-import at.fhv.se.platform.adapter.postgresdb.mapper.HouseholdUserMappingDBEntity;
-import at.fhv.se.platform.adapter.postgresdb.mapper.UserDBEntity;
+import at.fhv.se.platform.adapter.postgresdb.model.HouseholdDBEntity;
+import at.fhv.se.platform.adapter.postgresdb.model.HouseholdUserMappingDBEntity;
+import at.fhv.se.platform.adapter.postgresdb.model.UserDBEntity;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
 import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;

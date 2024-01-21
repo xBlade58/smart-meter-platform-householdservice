@@ -1,33 +1,31 @@
 package at.fhv.se.platform.application.service.household;
 
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import at.fhv.se.platform.adapter.dto.CreateHouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
-import at.fhv.se.platform.application.service.user.UserService;
 import at.fhv.se.platform.domain.events.MeterAssignedEvent;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
 import at.fhv.se.platform.domain.model.User;
 import at.fhv.se.platform.domain.port.inbound.household.AssignMeterToHouseholdUseCase;
-
-import at.fhv.se.platform.domain.port.inbound.household.*;
 import at.fhv.se.platform.domain.port.inbound.household.AssignUserToHouseholdUseCase;
 import at.fhv.se.platform.domain.port.inbound.household.CreateHouseholdUseCase;
 import at.fhv.se.platform.domain.port.inbound.household.GetAllHouseholdsUseCase;
+import at.fhv.se.platform.domain.port.inbound.household.GetHouseholdFromUserUseCase;
 import at.fhv.se.platform.domain.port.inbound.household.GetHouseholdUseCase;
 import at.fhv.se.platform.domain.port.outbound.EventPublisher;
 import at.fhv.se.platform.domain.port.outbound.persistence.HouseholdRepository;
 import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * @author Justin Ströhle
@@ -39,7 +37,7 @@ public class HouseholdService implements CreateHouseholdUseCase,
         GetAllHouseholdsUseCase,
         GetHouseholdUseCase,
         AssignUserToHouseholdUseCase,
-        AssignMeterToHouseholdUseCase {
+        AssignMeterToHouseholdUseCase,
         GetHouseholdFromUserUseCase {
 
     @Autowired
@@ -138,7 +136,10 @@ public class HouseholdService implements CreateHouseholdUseCase,
 
     @Override
     public void assign(String householdId, String meterId) {
-        eventPublisher.publishHosueholdEvent(new MeterAssignedEvent(householdId, LocalDateTime.now(), meterId));
+        Household h = householdRepository.getHousehold(meterId);
+        h.assingMeter(meterId);
+        householdRepository.assignMeter(h.getId(), h.getMeterId());
+        eventPublisher.publishHosueholdEvent(new MeterAssignedEvent(h.getId().toString(), LocalDateTime.now(), h.getMeterId()));
         
         /*
         if (householdRepository.existsById(meterId)) {

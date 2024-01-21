@@ -1,4 +1,4 @@
-package at.fhv.se.platform.adapter.postgresdb.mapper;
+package at.fhv.se.platform.adapter.postgresdb.model;
 
 import jakarta.persistence.*;
 

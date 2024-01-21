@@ -1,23 +1,29 @@
 package at.fhv.se.platform.adapter.rest;
 
 
-import at.fhv.se.platform.adapter.dto.*;
-import at.fhv.se.platform.adapter.dto.HouseholdDTO;
-import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
-import at.fhv.se.platform.adapter.dto.UnassignMeterDTO;
-import at.fhv.se.platform.adapter.dto.UserDTO;
-
-import at.fhv.se.platform.application.service.household.HouseholdService;
-import at.fhv.se.platform.application.service.user.UserService;
-import at.fhv.se.platform.domain.port.inbound.household.AssignMeterToHouseholdUseCase;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.UUID;
+import at.fhv.se.platform.adapter.dto.AssignMeterDTO;
+import at.fhv.se.platform.adapter.dto.CreateHouseholdDTO;
+import at.fhv.se.platform.adapter.dto.CreateUserDTO;
+import at.fhv.se.platform.adapter.dto.HouseholdDTO;
+import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
+import at.fhv.se.platform.adapter.dto.UserDTO;
+import at.fhv.se.platform.application.service.household.HouseholdService;
+import at.fhv.se.platform.application.service.user.UserService;
+import at.fhv.se.platform.domain.port.inbound.household.AssignMeterToHouseholdUseCase;
 
 
 /**
@@ -76,10 +82,10 @@ public class DevController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping(value = "/{householdId}/assignMeter", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{householdId}/assignMeter", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity assignMeterToHousehold(@PathVariable String householdId, @RequestBody AssignMeterDTO assignMeterDTO) {
         assignMeterToHouseholdUseCase.assign(householdId, assignMeterDTO.getMeterId());
-        return ResponseEntity.ok().body("test");
+        return ResponseEntity.ok().body("Meter was assigned successfully.");
     }
 
 }

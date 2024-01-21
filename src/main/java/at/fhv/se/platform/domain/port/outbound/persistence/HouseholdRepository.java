@@ -4,6 +4,7 @@ import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Justin Ströhle
@@ -22,4 +23,6 @@ public interface HouseholdRepository {
     void assignUser(User user, Household household);
 
     List<Household> getHouseholdsFromUser(User user);
+
+    void assignMeter(UUID householdId, String meterId);
 }
