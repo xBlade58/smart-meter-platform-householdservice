@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  title: Household Service
+  description: API for managing households and their associated users.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081/api/v1/households
+
+paths:
+  /getUsers:
+    get:
+      summary: Retrieve a list of users
+      responses:
+        '200':
+          description: Successful response
+
+  /getHouseholds:
+    get:
+      summary: Retrieve a list of households
+      responses:
+        '200':
+          description: Successful response
+
+  /getHouseholdsFromUser/{userId}:
+    get:
+      summary: Retrieve households associated with a specific user
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+        '404':
+          description: User not found
+
+  /createUser:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstname:
+                  type: string
+                lastname:
+                  type: string
+      responses:
+        '200':
+          description: User created successfully
+
+  /createHousehold:
+    post:
+      summary: Create a new household
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                street:
+                  type: string
+                streetNo:
+                  type: string
+                doorNo:
+                  type: string
+                city:
+                  type: string
+                zip:
+                  type: string
+                country:
+                  type: string
+                type:
+                  type: string
+                size:
+                  type: number
+                residentsNo:
+                  type: number
+      responses:
+        '200':
+          description: Household created successfully
+
+  /createHouseholdUserMapping:
+    post:
+      summary: Map a user to a household
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                householdId:
+                  type: string
+      responses:
+        '200':
+          description: Mapping created successfully
+        '404':
+          description: User or Household not found
+
+  /{householdId}/assignMeter:
+    put:
+      summary: Assign a meter to a household
+      parameters:
+        - in: path
+          name: householdId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Meter assigned successfully
+        '404':
+          description: Household not found
