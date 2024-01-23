@@ -1,10 +1,9 @@
 package at.fhv.se.platform.adapter.redis;
 
+import at.fhv.se.platform.domain.events.HouseholdEvent;
+import at.fhv.se.platform.application.port.outbound.EventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import at.fhv.se.platform.domain.events.HouseholdEvent;
-import at.fhv.se.platform.domain.port.outbound.EventPublisher;
 
 @Service
 public class RedisPublisher implements EventPublisher {
@@ -17,5 +16,5 @@ public class RedisPublisher implements EventPublisher {
         redisClient.addEvent("household", ev);
         System.out.println("Event published with ID = " + ev.getId());
     }
-    
+
 }

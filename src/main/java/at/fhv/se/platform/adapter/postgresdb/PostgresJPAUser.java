@@ -1,8 +1,7 @@
 package at.fhv.se.platform.adapter.postgresdb;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import at.fhv.se.platform.adapter.postgresdb.model.UserDBEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 

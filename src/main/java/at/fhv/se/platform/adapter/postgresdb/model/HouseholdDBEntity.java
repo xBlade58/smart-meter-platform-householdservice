@@ -62,7 +62,7 @@ public class HouseholdDBEntity {
     }
 
     public HouseholdDBEntity(UUID id, String street, String streetNo, String doorNo, String city, String zip,
-        String country, String type, double size, int residentsNo, String meterId) {
+                             String country, String type, double size, int residentsNo, String meterId) {
         this.id = id;
         this.street = street;
         this.streetNo = streetNo;
@@ -172,5 +172,5 @@ public class HouseholdDBEntity {
         this.meterId = meterId;
     }
 
-    
+
 }

@@ -4,7 +4,8 @@ public class AssignMeterDTO {
 
     private String meterId;
 
-    private AssignMeterDTO() {}
+    private AssignMeterDTO() {
+    }
 
     public String getMeterId() {
         return meterId;
@@ -14,5 +15,5 @@ public class AssignMeterDTO {
         this.meterId = meterId;
     }
 
-    
+
 }

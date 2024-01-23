@@ -1,12 +1,12 @@
 package at.fhv.se.platform.adapter.postgresdb;
 
-import at.fhv.se.platform.domain.model.User;
-import at.fhv.se.platform.domain.port.outbound.persistence.HouseholdRepository;
 import at.fhv.se.platform.adapter.postgresdb.model.HouseholdDBEntity;
 import at.fhv.se.platform.adapter.postgresdb.model.HouseholdUserMappingDBEntity;
 import at.fhv.se.platform.adapter.postgresdb.model.UserDBEntity;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
+import at.fhv.se.platform.domain.model.User;
+import at.fhv.se.platform.application.port.outbound.persistence.HouseholdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -99,11 +99,6 @@ public class PostgresHouseholdRepository implements HouseholdRepository {
 
     private static User mapDBEntityToModel(UserDBEntity userDBEntity) {
         return new User(userDBEntity.getId(), userDBEntity.getFirstName(), userDBEntity.getLastName());
-    }
-
-    @Override
-    public boolean existsById(String id) {
-        return postgresJPAHousehold.existsById(UUID.fromString(id));
     }
 
     @Override

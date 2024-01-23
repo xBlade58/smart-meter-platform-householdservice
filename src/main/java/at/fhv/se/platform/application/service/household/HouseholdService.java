@@ -1,31 +1,27 @@
 package at.fhv.se.platform.application.service.household;
 
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import at.fhv.se.platform.adapter.dto.CreateHouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.HouseholdUserMappingDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
+import at.fhv.se.platform.application.exceptions.HouseholdNotFoundException;
+import at.fhv.se.platform.application.exceptions.UserNotFoundException;
+import at.fhv.se.platform.application.port.inbound.household.*;
 import at.fhv.se.platform.domain.events.MeterAssignedEvent;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
 import at.fhv.se.platform.domain.model.User;
-import at.fhv.se.platform.domain.port.inbound.household.AssignMeterToHouseholdUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.AssignUserToHouseholdUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.CreateHouseholdUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.GetAllHouseholdsUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.GetHouseholdFromUserUseCase;
-import at.fhv.se.platform.domain.port.inbound.household.GetHouseholdUseCase;
-import at.fhv.se.platform.domain.port.outbound.EventPublisher;
-import at.fhv.se.platform.domain.port.outbound.persistence.HouseholdRepository;
-import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;
+import at.fhv.se.platform.application.port.outbound.EventPublisher;
+import at.fhv.se.platform.application.port.outbound.persistence.HouseholdRepository;
+import at.fhv.se.platform.application.port.outbound.persistence.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author Justin Ströhle
@@ -89,18 +85,23 @@ public class HouseholdService implements CreateHouseholdUseCase,
 
 
     @Override
-    public String assignUserToHousehold(HouseholdUserMappingDTO householdUserMappingDTO) {
+    public String assignUserToHousehold(HouseholdUserMappingDTO householdUserMappingDTO) throws HouseholdNotFoundException, UserNotFoundException {
         Household household = this.getHouseholdModel(householdUserMappingDTO.getHouseholdId());
         User user = this.getUserModel(householdUserMappingDTO.getUserId());
         if (household != null && user != null) {
             this.householdRepository.assignUser(user, household);
             return user.getId().toString() + "_" + household.getId().toString();
+        } else {
+            if (household == null) {
+                throw new HouseholdNotFoundException(householdUserMappingDTO.getHouseholdId());
+            } else {
+                throw new UserNotFoundException(householdUserMappingDTO.getUserId());
+            }
         }
-        return null;
     }
 
     @Override
-    public List<HouseholdDTO> getHouseholdFromUser(UUID userId) {
+    public List<HouseholdDTO> getHouseholdFromUser(UUID userId) throws UserNotFoundException {
         User user = this.getUserModel(userId.toString());
         if (user != null) {
             return this.householdRepository.getHouseholdsFromUser(user).stream()
@@ -118,8 +119,21 @@ public class HouseholdService implements CreateHouseholdUseCase,
                             household.getUserList().stream().map(HouseholdService::userToDTO).collect(Collectors.toList())
                     ))
                     .collect(Collectors.toList());
+        } else {
+            throw new UserNotFoundException(userId.toString());
         }
-        return null;
+    }
+
+    @Override
+    public void assign(String householdId, String meterId) throws HouseholdNotFoundException {
+        Household h = householdRepository.getHousehold(householdId);
+        if (h != null) {
+            h.assingMeter(meterId);
+            householdRepository.assignMeter(h.getId(), meterId);
+            eventPublisher.publishHosueholdEvent(new MeterAssignedEvent(h.getId().toString(), LocalDateTime.now(), meterId));
+        } else {
+            throw new HouseholdNotFoundException(householdId);
+        }
     }
 
     private Household getHouseholdModel(String id) {
@@ -134,17 +148,5 @@ public class HouseholdService implements CreateHouseholdUseCase,
         return new UserDTO(user.getId().toString(), user.getFirstName(), user.getLastName());
     }
 
-    @Override
-    public void assign(String householdId, String meterId) {
-        Household h = householdRepository.getHousehold(meterId);
-        h.assingMeter(meterId);
-        householdRepository.assignMeter(h.getId(), h.getMeterId());
-        eventPublisher.publishHosueholdEvent(new MeterAssignedEvent(h.getId().toString(), LocalDateTime.now(), h.getMeterId()));
-        
-        /*
-        if (householdRepository.existsById(meterId)) {
-        } else {
-            //TODO: throw exception
-        } */
-    }
+
 }

@@ -1,4 +1,4 @@
-package at.fhv.se.platform.domain.port.outbound.persistence;
+package at.fhv.se.platform.application.port.outbound.persistence;
 
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.User;
@@ -17,8 +17,6 @@ public interface HouseholdRepository {
     List<Household> getAllHouseholds();
 
     Household getHousehold(String id);
-
-    boolean existsById(String id);
 
     void assignUser(User user, Household household);
 

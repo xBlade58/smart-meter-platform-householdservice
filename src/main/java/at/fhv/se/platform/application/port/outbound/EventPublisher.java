@@ -1,4 +1,4 @@
-package at.fhv.se.platform.domain.port.outbound;
+package at.fhv.se.platform.application.port.outbound;
 
 import at.fhv.se.platform.domain.events.HouseholdEvent;
 
