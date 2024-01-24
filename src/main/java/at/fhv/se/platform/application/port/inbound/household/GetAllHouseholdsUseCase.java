@@ -1,4 +1,4 @@
-package at.fhv.se.platform.domain.port.inbound.household;
+package at.fhv.se.platform.application.port.inbound.household;
 
 import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 

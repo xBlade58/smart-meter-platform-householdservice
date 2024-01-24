@@ -1,7 +1,6 @@
 package at.fhv.se.platform.domain.events;
 
 public class MeterUnassignedEvent extends HouseholdEvent {
-
     private String meterId;
 
     public MeterUnassignedEvent(String meterId) {
@@ -16,7 +15,8 @@ public class MeterUnassignedEvent extends HouseholdEvent {
         return meterId;
     }
 
-    private MeterUnassignedEvent() {}    
+    private MeterUnassignedEvent() {
+    }
 
-    
+
 }

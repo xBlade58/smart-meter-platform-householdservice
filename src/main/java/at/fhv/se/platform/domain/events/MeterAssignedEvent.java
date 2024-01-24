@@ -2,9 +2,8 @@ package at.fhv.se.platform.domain.events;
 
 import java.time.LocalDateTime;
 
-
 public class MeterAssignedEvent extends HouseholdEvent {
-    
+
     private String meterId;
 
     public MeterAssignedEvent(String entityId, LocalDateTime timestamp, String meterId) {
@@ -17,7 +16,8 @@ public class MeterAssignedEvent extends HouseholdEvent {
         return meterId;
     }
 
-    private MeterAssignedEvent() {}
+    private MeterAssignedEvent() {
+    }
 
-    
+
 }

@@ -1,8 +1,7 @@
 package at.fhv.se.platform.adapter.postgresdb;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import at.fhv.se.platform.adapter.postgresdb.model.HouseholdUserMappingDBEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author Justin Ströhle

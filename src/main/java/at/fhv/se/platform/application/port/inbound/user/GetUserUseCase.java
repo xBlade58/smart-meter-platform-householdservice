@@ -1,4 +1,4 @@
-package at.fhv.se.platform.domain.port.inbound.user;
+package at.fhv.se.platform.application.port.inbound.user;
 
 import at.fhv.se.platform.adapter.dto.UserDTO;
 

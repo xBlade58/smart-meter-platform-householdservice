@@ -1,11 +1,10 @@
 package at.fhv.se.platform.domain.events;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "eventType", visible = true)
 @JsonSubTypes({
@@ -13,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = MeterUnassignedEvent.class, name = "MeterUnassignedEvent")
 })
 public abstract class HouseholdEvent {
-    
+
     private String id;
     protected String eventType;
     protected String entityId;
@@ -34,6 +33,7 @@ public abstract class HouseholdEvent {
     public String getEntityId() {
         return entityId;
     }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
@@ -53,7 +53,8 @@ public abstract class HouseholdEvent {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
-    
-    public HouseholdEvent() {}
+
+    public HouseholdEvent() {
+    }
 
 }

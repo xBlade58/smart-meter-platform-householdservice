@@ -1,8 +1,5 @@
 package at.fhv.se.platform.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;

@@ -5,8 +5,8 @@ import at.fhv.se.platform.adapter.postgresdb.model.HouseholdUserMappingDBEntity;
 import at.fhv.se.platform.adapter.postgresdb.model.UserDBEntity;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.HouseholdType;
-import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;
 import at.fhv.se.platform.domain.model.User;
+import at.fhv.se.platform.application.port.outbound.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

@@ -5,10 +5,10 @@ import at.fhv.se.platform.adapter.dto.HouseholdDTO;
 import at.fhv.se.platform.adapter.dto.UserDTO;
 import at.fhv.se.platform.domain.model.Household;
 import at.fhv.se.platform.domain.model.User;
-import at.fhv.se.platform.domain.port.inbound.user.CreateUserUseCase;
-import at.fhv.se.platform.domain.port.inbound.user.GetAllUsersUseCase;
-import at.fhv.se.platform.domain.port.inbound.user.GetUserUseCase;
-import at.fhv.se.platform.domain.port.outbound.persistence.UserRepository;
+import at.fhv.se.platform.application.port.inbound.user.CreateUserUseCase;
+import at.fhv.se.platform.application.port.inbound.user.GetAllUsersUseCase;
+import at.fhv.se.platform.application.port.inbound.user.GetUserUseCase;
+import at.fhv.se.platform.application.port.outbound.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,6 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
 
     @Override
     public List<UserDTO> getAllUsers() {
-        List<User> users = this.userRepository.getAllUsers();
         return this.userRepository.getAllUsers().stream()
                 .map(user -> new UserDTO(
                         user.getId().toString(),
@@ -51,7 +50,7 @@ public class UserService implements CreateUserUseCase, GetAllUsersUseCase, GetUs
                 user.getHouseholdList().stream().map(UserService::householdToDTO).collect(Collectors.toList()));
     }
 
-    private static HouseholdDTO householdToDTO(Household household){
+    private static HouseholdDTO householdToDTO(Household household) {
         return new HouseholdDTO(household.getId().toString(), household.getStreet(), household.getStreetNo(), household.getDoorNo(),
                 household.getCity(), household.getZip(), household.getCountry(), household.getType().toString(), household.getSize(),
                 household.getResidentsNo());

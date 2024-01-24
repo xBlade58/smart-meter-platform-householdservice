@@ -1,4 +1,4 @@
-package at.fhv.se.platform.domain.port.outbound.persistence;
+package at.fhv.se.platform.application.port.outbound.persistence;
 
 import at.fhv.se.platform.domain.model.User;
 
@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface UserRepository {
     String save(User user);
+
     List<User> getAllUsers();
+
     User getUser(String id);
 }
